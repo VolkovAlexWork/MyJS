@@ -18,10 +18,11 @@ function start(){
 };
 
  function chooseExpenses() {
+    let first, second, regexNum;
     for (let i=0; i<2; i++){
-       let first = prompt("Введите обязательную статью расходов в этом месяце", '');
-       let second = prompt("Во сколько обойдется", '');
-       let regexNum = /\d/g;
+       first = prompt("Введите обязательную статью расходов в этом месяце", '');
+       second = prompt("Во сколько обойдется", '');
+       regexNum = /\d/g;
 
        if (typeof (first) === 'string' && first != null && first !="" && first.match(regexNum) == null
            && typeof (second) === 'string' && second != null && second.match(regexNum) != null){
@@ -33,10 +34,22 @@ function start(){
  }
  chooseExpenses();
 
- appData.moneyPerDay = (appData.budget / 30).toFixed();
+function detectDayBudget(){
+   appData.moneyPerDay = (appData.budget / 30).toFixed();
+   alert("Money per day: " + appData.moneyPerDay);
+}
+detectDayBudget();
 
- alert("Money per day: " + appData.moneyPerDay);
-
+function detectLevel() {
+   if (appData.moneyPerDay<100){
+      console.log("Мінімальний рівень достатку");
+   } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000){
+      console.log("Середній рівень достатку");
+   }else if (appData.moneyPerDay > 20000){
+      console.log("Високий рівень достатку");
+   }else {console.log("Виникла помилка");}
+}
+detectLevel();
  function checkSavings() {
    if (appData.savings == true){
       let save = +prompt("Яка сума накоплення?"),
@@ -47,4 +60,12 @@ function start(){
 }
 checkSavings();
 
+ function chooseOptExpenses(){
+    let optExpenses;
+    for (let i = 1; i<=3; i++){
+       optExpenses = prompt("Стаття необовязкових витрат?", "");
+       appData.optionalExpenses[i] = optExpenses;
+    }
+ }
+chooseOptExpenses();
  console.log(appData);
